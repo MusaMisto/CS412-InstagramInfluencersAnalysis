@@ -43,8 +43,6 @@ The dataset consists of two primary components:
 
 ---
 
----
-
 ### **2. Feature Engineering**
 
 Feature engineering was a critical step in this project, where we transformed raw data into meaningful features to improve model performance for both classification and regression tasks. The following techniques and features were implemented:
