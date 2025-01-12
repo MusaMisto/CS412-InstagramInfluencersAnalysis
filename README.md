@@ -43,10 +43,71 @@ The dataset consists of two primary components:
 
 ---
 
+---
+
 ### **2. Feature Engineering**
-- **Text Features**: Extracted insights from posts and biographies.
-- **Numerical Features**: Derived meaningful metrics from user metadata.
-- **Derived Features**: Engineered attributes to enhance predictive power.
+
+Feature engineering was a critical step in this project, where we transformed raw data into meaningful features to improve model performance for both classification and regression tasks. The following techniques and features were implemented:
+
+#### **Text Features**
+1. **TF-IDF Vectorization**:
+   - Text data from user posts and biographies was vectorized using **Term Frequency-Inverse Document Frequency (TF-IDF)**.
+   - This technique emphasized unique and important words while down-weighting common words, providing a robust representation of textual data.
+   - Separate TF-IDF models were trained for:
+     - User biographies: Provided insights into user interests and focus areas.
+     - User posts: Captured the content and themes of user-generated content.
+
+2. **Custom Text Features**:
+   - Extracted word counts and character counts from biographies and posts to represent the text's verbosity and complexity.
+   - Calculated the percentage of stop words to identify the overall structure of user content.
+
+3. **Language-Specific Features**:
+   - Turkish-specific stop words were removed to focus on meaningful content.
+   - Tokenization and case normalization were applied to ensure consistency.
+
+---
+
+#### **Numerical Features**
+1. **Profile Metadata**:
+   - **Follower Count**: Represents a user’s influence.
+   - **Post Count**: Indicates activity level on the platform.
+   - **Engagement Rate**: Calculated as the ratio of likes and comments to followers, highlighting interaction levels.
+   - These features were normalized using **MinMaxScaler** to prevent scale-related bias in model training.
+
+2. **Derived Features**:
+   - **Followers-to-Posts Ratio**: A proxy for engagement or content impact per post.
+   - **Log-Transformed Follower Count**: Applied logarithmic transformation to handle skewness in follower distribution, improving regression model stability.
+   - **Biographical Indicators**: Identified specific phrases or keywords in biographies (e.g., "influencer," "business") to infer user category.
+
+---
+
+#### **Categorical Features**
+1. **User Type Encoding**:
+   - Features like `is_business_account` and `is_private` were one-hot encoded to indicate account type.
+2. **Profile Categories**:
+   - The categorical labels for classification (e.g., `food`, `tech`, `sports`) were encoded using **LabelEncoder** for model compatibility.
+
+---
+
+#### **Interaction Features**
+1. **Text and Numeric Feature Interaction**:
+   - Integrated text-based features (e.g., TF-IDF vectors) with metadata features like `follower_count` to identify correlations between content themes and user influence.
+   - For instance, users posting about "technology" with high engagement rates were more likely to belong to the `tech` category.
+2. **Cross-Derived Features**:
+   - Created composite features like `follower_growth_rate` (using historical data) to predict future engagement trends.
+
+---
+
+#### **Feature Selection**
+1. **Correlation Analysis**:
+   - Assessed feature correlations to avoid redundancy and improve computational efficiency.
+   - Retained highly predictive features while discarding those with low information gain.
+2. **Feature Importance**:
+   - Used tree-based models like Random Forest and XGBoost to compute feature importance scores, guiding iterative feature selection and refinement.
+
+---
+
+By combining text-based, numerical, and interaction features, this feature engineering process significantly enhanced the performance of classification and regression models, enabling them to capture both semantic and quantitative aspects of the data.
 
 ---
 
